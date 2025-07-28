@@ -187,6 +187,7 @@ const Desktop = () => {
     
     if (iconId === 'recycle') {
       setShowEasterEgg(true);
+      setTimeout(() => setShowEasterEgg(false), 5000);
       return;
     }
 
@@ -741,7 +742,7 @@ const Desktop = () => {
       <div className="absolute top-6 left-6 flex gap-8 z-10">
         {/* First Column - 7 icons */}
         <div className="flex flex-col gap-4">
-          {desktopIcons.slice(0, 7).map((icon) => (
+          {desktopIcons.slice(0, 7).filter(icon => icon.id !== 'recycle').map((icon) => (
             <div
               key={icon.id}
               className="macos-icon group relative w-20 flex flex-col items-center cursor-pointer transform transition-all duration-200 hover:scale-105 hover:brightness-110"
@@ -771,7 +772,7 @@ const Desktop = () => {
         
         {/* Second Column - Remaining icons */}
         <div className="flex flex-col gap-4">
-          {desktopIcons.slice(7).map((icon) => (
+          {desktopIcons.slice(7).filter(icon => icon.id !== 'recycle').map((icon) => (
             <div
               key={icon.id}
               className="macos-icon group relative w-20 flex flex-col items-center cursor-pointer transform transition-all duration-200 hover:scale-105 hover:brightness-110"
@@ -799,6 +800,36 @@ const Desktop = () => {
           ))}
         </div>
       </div>
+
+      {/* Recycle Bin - Bottom Right */}
+      {(() => {
+        const recycleBin = desktopIcons.find(icon => icon.id === 'recycle');
+        return recycleBin ? (
+          <div
+            className="absolute bottom-20 right-6 macos-icon group w-20 flex flex-col items-center cursor-pointer transform transition-all duration-200 hover:scale-105 hover:brightness-110 z-10"
+            onDoubleClick={() => handleIconDoubleClick(recycleBin.id)}
+          >
+            <div className="w-16 h-16 mb-1 flex items-center justify-center relative">
+              {/* Icon Base - Skeuomorphic Style */}
+              <div className="w-full h-full rounded-lg bg-gradient-to-br from-pink-600 via-pink-700 to-pink-900 shadow-2xl border border-pink-500/30 relative overflow-hidden">
+                {/* Glossy overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/30 rounded-lg"></div>
+                {/* Inner shadow for depth */}
+                <div className="absolute inset-0.5 bg-gradient-to-br from-pink-500 via-pink-600 to-pink-800 rounded-lg shadow-inner"></div>
+                {/* Icon content */}
+                <div className="absolute inset-0 flex items-center justify-center text-white text-2xl z-10">
+                  {recycleBin.icon}
+                </div>
+                {/* Reflection highlight */}
+                <div className="absolute top-1 left-1 right-1 h-4 bg-gradient-to-b from-white/30 to-transparent rounded-t-lg"></div>
+              </div>
+            </div>
+            <span className="text-xs text-white text-center font-medium drop-shadow-lg max-w-20 leading-tight">
+              {recycleBin.name}
+            </span>
+          </div>
+        ) : null;
+      })()}
 
       {/* Start Menu */}
       {showStartMenu && (
