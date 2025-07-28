@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Folder, FileText, Code, Monitor, User, Github, Youtube, Newspaper, Award, Briefcase, GraduationCap, Mail, Phone, MapPin, Calendar, Coffee, Zap, X } from 'lucide-react';
+import { Folder, FileText, Code, Monitor, User, Github, Youtube, Newspaper, Award, Briefcase, GraduationCap, Mail, Phone, MapPin, Calendar, Coffee, Zap, X, Wifi } from 'lucide-react';
 import Taskbar from './Taskbar';
 import Window from './Window';
 import VistaEasterEggs from './VistaEasterEggs';
@@ -21,6 +21,8 @@ const Desktop = () => {
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [showStartMenu, setShowStartMenu] = useState(false);
   const [desktopIcons, setDesktopIcons] = useState<DesktopIcon[]>([]);
+  const [userIP, setUserIP] = useState<string>('');
+  const [showIPNotification, setShowIPNotification] = useState(false);
 
   // Initialize desktop icons
   useEffect(() => {
@@ -107,6 +109,23 @@ const Desktop = () => {
       }
     ];
     setDesktopIcons(initialIcons);
+  }, []);
+
+  // Fetch user IP
+  useEffect(() => {
+    const fetchUserIP = async () => {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        setUserIP(data.ip);
+        setShowIPNotification(true);
+        setTimeout(() => setShowIPNotification(false), 10000);
+      } catch (error) {
+        console.log('Could not fetch IP');
+      }
+    };
+
+    fetchUserIP();
   }, []);
 
   // Easter egg trigger - Konami code
@@ -719,33 +738,66 @@ const Desktop = () => {
       <div className="absolute inset-0 bg-black/40"></div>
       
       {/* Desktop Icons */}
-      <div className="absolute top-6 left-6 flex flex-col gap-4 z-10">
-        {desktopIcons.map((icon) => (
-          <div
-            key={icon.id}
-            className="macos-icon group relative w-20 flex flex-col items-center cursor-pointer transform transition-all duration-200 hover:scale-105 hover:brightness-110"
-            onDoubleClick={() => handleIconDoubleClick(icon.id)}
-          >
-            <div className="w-16 h-16 mb-1 flex items-center justify-center relative">
-              {/* Icon Base - Skeuomorphic Style */}
-              <div className="w-full h-full rounded-lg bg-gradient-to-br from-slate-600 via-slate-700 to-slate-900 shadow-2xl border border-slate-500/30 relative overflow-hidden">
-                {/* Glossy overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/30 rounded-lg"></div>
-                {/* Inner shadow for depth */}
-                <div className="absolute inset-0.5 bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800 rounded-lg shadow-inner"></div>
-                {/* Icon content */}
-                <div className="absolute inset-0 flex items-center justify-center text-primary text-2xl z-10">
-                  {icon.icon}
+      <div className="absolute top-6 left-6 flex gap-8 z-10">
+        {/* First Column - 7 icons */}
+        <div className="flex flex-col gap-4">
+          {desktopIcons.slice(0, 7).map((icon) => (
+            <div
+              key={icon.id}
+              className="macos-icon group relative w-20 flex flex-col items-center cursor-pointer transform transition-all duration-200 hover:scale-105 hover:brightness-110"
+              onDoubleClick={() => handleIconDoubleClick(icon.id)}
+            >
+              <div className="w-16 h-16 mb-1 flex items-center justify-center relative">
+                {/* Icon Base - Skeuomorphic Style */}
+                <div className="w-full h-full rounded-lg bg-gradient-to-br from-slate-600 via-slate-700 to-slate-900 shadow-2xl border border-slate-500/30 relative overflow-hidden">
+                  {/* Glossy overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/30 rounded-lg"></div>
+                  {/* Inner shadow for depth */}
+                  <div className="absolute inset-0.5 bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800 rounded-lg shadow-inner"></div>
+                  {/* Icon content */}
+                  <div className="absolute inset-0 flex items-center justify-center text-primary text-2xl z-10">
+                    {icon.icon}
+                  </div>
+                  {/* Reflection highlight */}
+                  <div className="absolute top-1 left-1 right-1 h-4 bg-gradient-to-b from-white/30 to-transparent rounded-t-lg"></div>
                 </div>
-                {/* Reflection highlight */}
-                <div className="absolute top-1 left-1 right-1 h-4 bg-gradient-to-b from-white/30 to-transparent rounded-t-lg"></div>
               </div>
+              <span className="text-xs text-white text-center font-medium drop-shadow-lg max-w-20 leading-tight">
+                {icon.name}
+              </span>
             </div>
-            <span className="text-xs text-white text-center font-medium drop-shadow-lg max-w-20 leading-tight">
-              {icon.name}
-            </span>
-          </div>
-        ))}
+          ))}
+        </div>
+        
+        {/* Second Column - Remaining icons */}
+        <div className="flex flex-col gap-4">
+          {desktopIcons.slice(7).map((icon) => (
+            <div
+              key={icon.id}
+              className="macos-icon group relative w-20 flex flex-col items-center cursor-pointer transform transition-all duration-200 hover:scale-105 hover:brightness-110"
+              onDoubleClick={() => handleIconDoubleClick(icon.id)}
+            >
+              <div className="w-16 h-16 mb-1 flex items-center justify-center relative">
+                {/* Icon Base - Skeuomorphic Style */}
+                <div className="w-full h-full rounded-lg bg-gradient-to-br from-slate-600 via-slate-700 to-slate-900 shadow-2xl border border-slate-500/30 relative overflow-hidden">
+                  {/* Glossy overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/30 rounded-lg"></div>
+                  {/* Inner shadow for depth */}
+                  <div className="absolute inset-0.5 bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800 rounded-lg shadow-inner"></div>
+                  {/* Icon content */}
+                  <div className="absolute inset-0 flex items-center justify-center text-primary text-2xl z-10">
+                    {icon.icon}
+                  </div>
+                  {/* Reflection highlight */}
+                  <div className="absolute top-1 left-1 right-1 h-4 bg-gradient-to-b from-white/30 to-transparent rounded-t-lg"></div>
+                </div>
+              </div>
+              <span className="text-xs text-white text-center font-medium drop-shadow-lg max-w-20 leading-tight">
+                {icon.name}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Start Menu */}
@@ -805,6 +857,18 @@ const Desktop = () => {
         onStartMenuClick={handleStartMenuClick}
       />
       
+      {/* IP Notification */}
+      {showIPNotification && userIP && (
+        <div className="fixed bottom-4 right-4 z-50 bg-gray-900 border border-green-500 rounded-lg p-3 shadow-2xl animate-pulse">
+          <div className="flex items-center space-x-2">
+            <Wifi className="w-4 h-4 text-green-400" />
+            <span className="text-green-300 text-sm font-mono">
+              Hi {userIP}! 👋
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Easter Eggs */}
       <VistaEasterEggs showEasterEgg={showEasterEgg} />
     </div>
