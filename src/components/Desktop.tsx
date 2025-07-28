@@ -177,15 +177,6 @@ const Desktop = () => {
     setActiveWindow(iconId);
   };
 
-  const handleIconRemove = (iconId: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setDesktopIcons(icons => icons.filter(icon => icon.id !== iconId));
-    
-    // Close window if it's open
-    if (openWindows.includes(iconId)) {
-      handleCloseWindow(iconId);
-    }
-  };
 
   const handleCloseWindow = (windowId: string) => {
     setOpenWindows(openWindows.filter(id => id !== windowId));
@@ -717,29 +708,45 @@ const Desktop = () => {
   };
 
   return (
-    <div className="desktop-wallpaper relative">
+    <div 
+      className="desktop-wallpaper relative"
+      style={{
+        backgroundImage: `url('/lovable-uploads/d6c3dbce-0df2-45ac-a026-b0181a4e3a3b.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
+      <div className="absolute inset-0 bg-black/40"></div>
+      
       {/* Desktop Icons */}
-      {desktopIcons.map((icon) => (
-        <div
-          key={icon.id}
-          className="desktop-icon absolute w-20 text-center group"
-          style={{ left: icon.position.x, top: icon.position.y }}
-          onDoubleClick={() => handleIconDoubleClick(icon.id)}
-        >
-          <div className="relative">
-            {icon.icon}
-            {icon.removable && (
-              <button
-                onClick={(e) => handleIconRemove(icon.id, e)}
-                className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <X className="w-3 h-3 text-white" />
-              </button>
-            )}
+      <div className="absolute top-6 left-6 flex flex-col gap-4 z-10">
+        {desktopIcons.map((icon) => (
+          <div
+            key={icon.id}
+            className="macos-icon group relative w-20 flex flex-col items-center cursor-pointer transform transition-all duration-200 hover:scale-105 hover:brightness-110"
+            onDoubleClick={() => handleIconDoubleClick(icon.id)}
+          >
+            <div className="w-16 h-16 mb-1 flex items-center justify-center relative">
+              {/* Icon Base - Skeuomorphic Style */}
+              <div className="w-full h-full rounded-lg bg-gradient-to-br from-slate-600 via-slate-700 to-slate-900 shadow-2xl border border-slate-500/30 relative overflow-hidden">
+                {/* Glossy overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/30 rounded-lg"></div>
+                {/* Inner shadow for depth */}
+                <div className="absolute inset-0.5 bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800 rounded-lg shadow-inner"></div>
+                {/* Icon content */}
+                <div className="absolute inset-0 flex items-center justify-center text-primary text-2xl z-10">
+                  {icon.icon}
+                </div>
+                {/* Reflection highlight */}
+                <div className="absolute top-1 left-1 right-1 h-4 bg-gradient-to-b from-white/30 to-transparent rounded-t-lg"></div>
+              </div>
+            </div>
+            <span className="text-xs text-white text-center font-medium drop-shadow-lg max-w-20 leading-tight">
+              {icon.name}
+            </span>
           </div>
-          <span className="text-xs mt-1 block truncate text-green-300">{icon.name}</span>
-        </div>
-      ))}
+        ))}
+      </div>
 
       {/* Start Menu */}
       {showStartMenu && (
