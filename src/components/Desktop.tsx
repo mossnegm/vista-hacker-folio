@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from 'react';
-import { Folder, FileText, Code, Monitor, User, Github, Youtube, Newspaper, Award, Briefcase, GraduationCap, Mail, Phone, MapPin, Calendar, Coffee, Zap } from 'lucide-react';
+import { Folder, FileText, Code, Monitor, User, Github, Youtube, Newspaper, Award, Briefcase, GraduationCap, Mail, Phone, MapPin, Calendar, Coffee, Zap, X } from 'lucide-react';
 import Taskbar from './Taskbar';
 import Window from './Window';
 import VistaEasterEggs from './VistaEasterEggs';
@@ -11,14 +12,104 @@ interface DesktopIcon {
   type: 'folder' | 'file' | 'app';
   content?: React.ReactNode;
   position: { x: number; y: number };
+  removable: boolean;
 }
 
 const Desktop = () => {
   const [openWindows, setOpenWindows] = useState<string[]>([]);
   const [activeWindow, setActiveWindow] = useState<string | null>(null);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [showStartMenu, setShowStartMenu] = useState(false);
+  const [desktopIcons, setDesktopIcons] = useState<DesktopIcon[]>([]);
 
-  // Easter egg trigger - Konami code or specific key combination
+  // Initialize desktop icons
+  useEffect(() => {
+    const initialIcons: DesktopIcon[] = [
+      {
+        id: 'about',
+        name: 'About Me',
+        icon: <User className="w-12 h-12 text-green-400" />,
+        type: 'file',
+        position: { x: 50, y: 50 },
+        removable: true
+      },
+      {
+        id: 'projects',
+        name: 'Security Projects',
+        icon: <Folder className="w-12 h-12 text-green-400" />,
+        type: 'folder',
+        position: { x: 50, y: 150 },
+        removable: true
+      },
+      {
+        id: 'experience',
+        name: 'Work Experience',
+        icon: <Briefcase className="w-12 h-12 text-green-400" />,
+        type: 'folder',
+        position: { x: 50, y: 250 },
+        removable: true
+      },
+      {
+        id: 'education',
+        name: 'Education',
+        icon: <GraduationCap className="w-12 h-12 text-green-400" />,
+        type: 'folder',
+        position: { x: 50, y: 350 },
+        removable: true
+      },
+      {
+        id: 'skills',
+        name: 'Skills & Tools',
+        icon: <Code className="w-12 h-12 text-green-400" />,
+        type: 'folder',
+        position: { x: 150, y: 50 },
+        removable: true
+      },
+      {
+        id: 'achievements',
+        name: 'Awards & Certs',
+        icon: <Award className="w-12 h-12 text-green-400" />,
+        type: 'folder',
+        position: { x: 150, y: 150 },
+        removable: true
+      },
+      {
+        id: 'updates',
+        name: 'Recent Updates',
+        icon: <Newspaper className="w-12 h-12 text-green-400" />,
+        type: 'folder',
+        position: { x: 150, y: 250 },
+        removable: true
+      },
+      {
+        id: 'contact',
+        name: 'Contact Info',
+        icon: <Mail className="w-12 h-12 text-green-400" />,
+        type: 'file',
+        position: { x: 150, y: 350 },
+        removable: true
+      },
+      {
+        id: 'github',
+        name: 'GitHub',
+        icon: <Github className="w-12 h-12 text-green-400" />,
+        type: 'app',
+        position: { x: 250, y: 50 },
+        removable: true
+      },
+      {
+        id: 'recycle',
+        name: 'Recycle Bin',
+        icon: <div className="w-12 h-12 bg-gray-600 rounded flex items-center justify-center text-xs">🗑️</div>,
+        type: 'app',
+        position: { x: window.innerWidth - 120, y: window.innerHeight - 200 },
+        removable: false
+      }
+    ];
+    setDesktopIcons(initialIcons);
+  }, []);
+
+  // Easter egg trigger - Konami code
   useEffect(() => {
     let konamiSequence = [];
     const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
@@ -39,81 +130,42 @@ const Desktop = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
 
-  const desktopIcons: DesktopIcon[] = [
-    {
-      id: 'about',
-      name: 'About Me',
-      icon: <User className="w-12 h-12 text-blue-400" />,
-      type: 'file',
-      position: { x: 50, y: 50 }
-    },
-    {
-      id: 'projects',
-      name: 'Security Projects',
-      icon: <Folder className="w-12 h-12 text-yellow-400" />,
-      type: 'folder',
-      position: { x: 50, y: 150 }
-    },
-    {
-      id: 'experience',
-      name: 'Work Experience',
-      icon: <Briefcase className="w-12 h-12 text-green-400" />,
-      type: 'folder',
-      position: { x: 50, y: 250 }
-    },
-    {
-      id: 'education',
-      name: 'Education',
-      icon: <GraduationCap className="w-12 h-12 text-purple-400" />,
-      type: 'folder',
-      position: { x: 50, y: 350 }
-    },
-    {
-      id: 'skills',
-      name: 'Skills & Tools',
-      icon: <Code className="w-12 h-12 text-cyan-400" />,
-      type: 'folder',
-      position: { x: 150, y: 50 }
-    },
-    {
-      id: 'achievements',
-      name: 'Awards & Certs',
-      icon: <Award className="w-12 h-12 text-orange-400" />,
-      type: 'folder',
-      position: { x: 150, y: 150 }
-    },
-    {
-      id: 'contact',
-      name: 'Contact Info',
-      icon: <Mail className="w-12 h-12 text-red-400" />,
-      type: 'file',
-      position: { x: 150, y: 250 }
-    },
-    {
-      id: 'github',
-      name: 'GitHub',
-      icon: <Github className="w-12 h-12 text-gray-300" />,
-      type: 'app',
-      position: { x: 150, y: 350 }
-    },
-    // Easter egg: Recycle Bin
-    {
-      id: 'recycle',
-      name: 'Recycle Bin',
-      icon: <div className="w-12 h-12 bg-gray-600 rounded flex items-center justify-center text-xs">🗑️</div>,
-      type: 'app',
-      position: { x: window.innerWidth - 120, y: window.innerHeight - 200 }
-    }
-  ];
+  // Dev tools protection
+  useEffect(() => {
+    const detectDevTools = () => {
+      setShowEasterEgg(true);
+      setTimeout(() => setShowEasterEgg(false), 5000);
+    };
+
+    // Detect F12
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'C') || (e.ctrlKey && e.key === 'u')) {
+        e.preventDefault();
+        detectDevTools();
+      }
+    };
+
+    // Detect right-click
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+      detectDevTools();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('contextmenu', handleContextMenu);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('contextmenu', handleContextMenu);
+    };
+  }, []);
 
   const handleIconDoubleClick = (iconId: string) => {
-    // Special handling for external links
     if (iconId === 'github') {
       window.open('https://github.com/mossnegm', '_blank');
       return;
     }
     
-    // Easter egg for recycle bin
     if (iconId === 'recycle') {
       setShowEasterEgg(true);
       return;
@@ -125,11 +177,30 @@ const Desktop = () => {
     setActiveWindow(iconId);
   };
 
+  const handleIconRemove = (iconId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDesktopIcons(icons => icons.filter(icon => icon.id !== iconId));
+    
+    // Close window if it's open
+    if (openWindows.includes(iconId)) {
+      handleCloseWindow(iconId);
+    }
+  };
+
   const handleCloseWindow = (windowId: string) => {
     setOpenWindows(openWindows.filter(id => id !== windowId));
     if (activeWindow === windowId) {
       setActiveWindow(openWindows.length > 1 ? openWindows[openWindows.length - 2] : null);
     }
+  };
+
+  const handleStartMenuClick = () => {
+    setShowStartMenu(!showStartMenu);
+  };
+
+  const handleStartMenuItemClick = (iconId: string) => {
+    setShowStartMenu(false);
+    handleIconDoubleClick(iconId);
   };
 
   const getWindowContent = (iconId: string) => {
@@ -142,8 +213,12 @@ const Desktop = () => {
             <h2 className="text-2xl font-bold mb-6 text-window-title">About Mostafa Negm</h2>
             <div className="window-chrome p-6">
               <div className="flex items-start space-x-6">
-                <div className="w-32 h-32 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
-                  <User className="w-16 h-16 text-primary-foreground" />
+                <div className="w-32 h-32 bg-primary rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/92420ed8-5838-4aaa-823b-e73fb5582f4e.png" 
+                    alt="Mostafa Negm"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-xl font-bold mb-3 text-window-title">Cybersecurity Analyst</h3>
@@ -259,7 +334,8 @@ const Desktop = () => {
                   location: 'Irving, TX',
                   period: 'July 2025 - Present',
                   description: 'Maintain high-performance endpoint protection using Azure AD, Intune, and Sophos tools. Monitor and apply system security updates using SCCM, contributing to a 40% patch compliance increase.',
-                  tags: ['Azure AD', 'Intune', 'Sophos', 'SCCM', 'PKI', 'MFA']
+                  tags: ['Azure AD', 'Intune', 'Sophos', 'SCCM', 'PKI', 'MFA'],
+                  logo: '/lovable-uploads/cb954233-ae9d-402e-8854-5c2fa07af5bd.png'
                 },
                 {
                   title: 'IT Support Engineer',
@@ -267,7 +343,8 @@ const Desktop = () => {
                   location: 'Irving, TX',
                   period: 'January 2023 - July 2025',
                   description: 'Managed IT systems and optimized uptime using SolarWinds and Route53. Deployed SCCM for automated patch management, ensuring system compliance.',
-                  tags: ['SolarWinds', 'Route53', 'SCCM', 'Entrust PKI', 'Azure Entra-ID']
+                  tags: ['SolarWinds', 'Route53', 'SCCM', 'Entrust PKI', 'Azure Entra-ID'],
+                  logo: '/lovable-uploads/5ab24774-41ac-4950-8ec1-4a8f0c7ce514.png'
                 },
                 {
                   title: 'Cloud Security Specialist',
@@ -275,7 +352,8 @@ const Desktop = () => {
                   location: 'Denton, TX',
                   period: 'May 2022 - March 2023',
                   description: 'Designed and managed secure Azure environments using NSGs, ASGs, and Azure Firewall. Enhanced cloud IAM policies with RBAC and PIM.',
-                  tags: ['Azure Firewall', 'RBAC', 'PIM', 'Azure Sentinel', 'Splunk']
+                  tags: ['Azure Firewall', 'RBAC', 'PIM', 'Azure Sentinel', 'Splunk'],
+                  logo: '🔐'
                 },
                 {
                   title: 'Cybersecurity Analyst',
@@ -283,27 +361,39 @@ const Desktop = () => {
                   location: 'Denton, TX',
                   period: 'July 2021 - May 2022',
                   description: 'Monitored and analyzed SIEM events using Splunk and QRadar. Conducted vulnerability assessments with Tenable and Nessus.',
-                  tags: ['Splunk', 'QRadar', 'Nessus', 'Tenable', 'MITRE ATT&CK', 'Python']
+                  tags: ['Splunk', 'QRadar', 'Nessus', 'Tenable', 'MITRE ATT&CK', 'Python'],
+                  logo: '🔐'
                 }
               ].map((job, index) => (
                 <div key={index} className="window-chrome p-4">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="font-bold text-lg text-primary">{job.title}</h3>
-                      <h4 className="text-md text-window-title">{job.company}</h4>
-                      <p className="text-sm text-muted-foreground">{job.location}</p>
+                  <div className="flex items-start space-x-4 mb-3">
+                    <div className="w-16 h-16 flex items-center justify-center bg-secondary/20 rounded">
+                      {typeof job.logo === 'string' && job.logo.startsWith('/') ? (
+                        <img src={job.logo} alt={job.company} className="w-12 h-12 object-contain" />
+                      ) : (
+                        <div className="text-2xl">{job.logo}</div>
+                      )}
                     </div>
-                    <span className="text-sm text-muted-foreground bg-secondary/20 px-2 py-1 rounded">
-                      {job.period}
-                    </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-3">{job.description}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {job.tags.map((tag, tagIndex) => (
-                      <span key={tagIndex} className="text-xs bg-primary/20 text-primary px-2 py-1 rounded">
-                        {tag}
-                      </span>
-                    ))}
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="font-bold text-lg text-primary">{job.title}</h3>
+                          <h4 className="text-md text-window-title">{job.company}</h4>
+                          <p className="text-sm text-muted-foreground">{job.location}</p>
+                        </div>
+                        <span className="text-sm text-muted-foreground bg-secondary/20 px-2 py-1 rounded">
+                          {job.period}
+                        </span>
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-2 mb-3">{job.description}</p>
+                      <div className="flex flex-wrap gap-1">
+                        {job.tags.map((tag, tagIndex) => (
+                          <span key={tagIndex} className="text-xs bg-primary/20 text-primary px-2 py-1 rounded">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -318,8 +408,12 @@ const Desktop = () => {
             <div className="space-y-6">
               <div className="window-chrome p-6">
                 <div className="flex items-start space-x-4">
-                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
-                    <GraduationCap className="w-8 h-8 text-primary-foreground" />
+                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center overflow-hidden">
+                    <img 
+                      src="/lovable-uploads/5ab24774-41ac-4950-8ec1-4a8f0c7ce514.png" 
+                      alt="University of Dallas"
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-primary mb-1">Master's in Cybersecurity</h3>
@@ -467,6 +561,84 @@ const Desktop = () => {
             </div>
           </div>
         );
+
+      case 'updates':
+        return (
+          <div className="p-6">
+            <h2 className="text-2xl font-bold mb-6 text-window-title">Recent Updates</h2>
+            <div className="space-y-6">
+              {[
+                {
+                  date: '01/01/2025',
+                  title: 'Launched my personal website!',
+                  description: 'Created a personal website to showcase my projects, share my journey in programming, and provide resources for fellow developers.'
+                },
+                {
+                  date: '11/01/2024',
+                  title: 'Preparing for OSCP Certification',
+                  description: 'Dedicated time to enhancing penetration testing skills and studying advanced offensive security techniques.'
+                },
+                {
+                  date: '12/01/2024',
+                  title: 'AWS Certified Solutions Architect',
+                  description: 'Earned the AWS Certified Solutions Architect credential demonstrating expertise in AWS services and cloud security.'
+                },
+                {
+                  date: '12/01/2024',
+                  title: 'Cyber Operations Graduate',
+                  description: 'Completed a graduate program in Cyber Operations at The University of Dallas, gaining advanced knowledge in cybersecurity practices.'
+                },
+                {
+                  date: '10/01/2024',
+                  title: 'Sigma Iota Epsilon Membership',
+                  description: 'Became a member of Sigma Iota Epsilon\'s Sigma Zeta Chapter, developing skills in leadership, team building, and business management.'
+                },
+                {
+                  date: '04/01/2024',
+                  title: 'CompTIA Security+ ce Certification',
+                  description: 'Achieved the CompTIA Security+ ce Certification, covering network security, digital forensics, and ISO standards.'
+                },
+                {
+                  date: '04/01/2024',
+                  title: 'SOC Member',
+                  description: 'Joined LetsDefend as a SOC member, focusing on threat monitoring and incident response.'
+                },
+                {
+                  date: '01/01/2024',
+                  title: 'ISC2 Candidate',
+                  description: 'Enrolled as an ISC2 Candidate, working toward advanced certifications in information security.'
+                },
+                {
+                  date: '05/01/2023',
+                  title: 'Studied OWASP Top 10',
+                  description: 'Completed a course on OWASP Top 10 vulnerabilities to strengthen application security expertise.'
+                },
+                {
+                  date: '04/01/2023',
+                  title: 'Python for Cybersecurity',
+                  description: 'Completed Infosec\'s Python for Cybersecurity course, learning how to apply Python in penetration testing and automation.'
+                }
+              ].map((update, index) => (
+                <div key={index} className="window-chrome p-4">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
+                      <Calendar className="w-8 h-8 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-bold text-lg text-primary">{update.title}</h3>
+                        <span className="text-sm text-muted-foreground bg-secondary/20 px-2 py-1 rounded">
+                          {update.date}
+                        </span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{update.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
         
       case 'contact':
         return (
@@ -526,7 +698,7 @@ const Desktop = () => {
                 <div className="text-center p-4 bg-primary/10 rounded">
                   <p className="text-sm font-semibold text-primary">💡 Fun Fact</p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Try pressing ↑↑↓↓←→←→BA for a Windows Vista surprise! 🎮
+                    Try the Konami code (↑↑↓↓←→←→BA) for a surprise! 🎮
                   </p>
                 </div>
               </div>
@@ -550,14 +722,55 @@ const Desktop = () => {
       {desktopIcons.map((icon) => (
         <div
           key={icon.id}
-          className="desktop-icon absolute w-20 text-center"
+          className="desktop-icon absolute w-20 text-center group"
           style={{ left: icon.position.x, top: icon.position.y }}
           onDoubleClick={() => handleIconDoubleClick(icon.id)}
         >
-          {icon.icon}
-          <span className="text-xs mt-1 block truncate">{icon.name}</span>
+          <div className="relative">
+            {icon.icon}
+            {icon.removable && (
+              <button
+                onClick={(e) => handleIconRemove(icon.id, e)}
+                className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <X className="w-3 h-3 text-white" />
+              </button>
+            )}
+          </div>
+          <span className="text-xs mt-1 block truncate text-green-300">{icon.name}</span>
         </div>
       ))}
+
+      {/* Start Menu */}
+      {showStartMenu && (
+        <div className="fixed bottom-12 left-2 w-80 max-h-96 bg-gray-900 border border-green-500 rounded-lg overflow-hidden z-40">
+          <div className="p-4 bg-gray-800 border-b border-green-500">
+            <h3 className="text-green-400 font-bold">Start Menu</h3>
+          </div>
+          <div className="max-h-80 overflow-y-auto">
+            {desktopIcons.filter(icon => icon.id !== 'recycle').map((icon) => (
+              <div
+                key={icon.id}
+                className="flex items-center space-x-3 p-3 hover:bg-gray-800 cursor-pointer border-b border-gray-700 last:border-b-0"
+                onClick={() => handleStartMenuItemClick(icon.id)}
+              >
+                <div className="w-8 h-8 flex items-center justify-center">
+                  {icon.icon}
+                </div>
+                <span className="text-green-300 text-sm">{icon.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Click overlay to close start menu */}
+      {showStartMenu && (
+        <div
+          className="fixed inset-0 z-30"
+          onClick={() => setShowStartMenu(false)}
+        />
+      )}
 
       {/* Windows */}
       {openWindows.map((windowId, index) => {
@@ -578,7 +791,12 @@ const Desktop = () => {
       })}
 
       {/* Taskbar */}
-      <Taskbar openWindows={openWindows} activeWindow={activeWindow} onWindowClick={setActiveWindow} />
+      <Taskbar 
+        openWindows={openWindows} 
+        activeWindow={activeWindow} 
+        onWindowClick={setActiveWindow}
+        onStartMenuClick={handleStartMenuClick}
+      />
       
       {/* Easter Eggs */}
       <VistaEasterEggs showEasterEgg={showEasterEgg} />

@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -25,7 +26,7 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				
-				// Vista Color System
+				// Kali Linux Color System
 				glass: {
 					primary: 'hsl(var(--glass-primary))',
 					secondary: 'hsl(var(--glass-secondary))',
@@ -104,11 +105,20 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'matrix-rain': {
+					'0%': {
+						transform: 'translateY(-100%)'
+					},
+					'100%': {
+						transform: 'translateY(100vh)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'matrix-rain': 'matrix-rain 2s linear infinite'
 			}
 		}
 	},

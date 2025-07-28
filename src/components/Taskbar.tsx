@@ -1,13 +1,15 @@
-import { Clock, User, Wifi, Volume2 } from 'lucide-react';
+
+import { Clock } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface TaskbarProps {
   openWindows: string[];
   activeWindow: string | null;
   onWindowClick: (windowId: string) => void;
+  onStartMenuClick: () => void;
 }
 
-const Taskbar = ({ openWindows, activeWindow, onWindowClick }: TaskbarProps) => {
+const Taskbar = ({ openWindows, activeWindow, onWindowClick, onStartMenuClick }: TaskbarProps) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -38,8 +40,13 @@ const Taskbar = ({ openWindows, activeWindow, onWindowClick }: TaskbarProps) => 
     <div className="taskbar fixed bottom-0 left-0 right-0 h-12 flex items-center justify-between px-2 z-50">
       {/* Start Button */}
       <div className="flex items-center space-x-2">
-        <button className="vista-button px-4 py-2 h-8 flex items-center space-x-2 text-sm font-medium">
-          <div className="w-4 h-4 bg-primary-foreground rounded-sm"></div>
+        <button 
+          onClick={onStartMenuClick}
+          className="kali-button px-4 py-2 h-8 flex items-center space-x-2 text-sm font-medium"
+        >
+          <div className="w-4 h-4 bg-green-500 rounded-sm flex items-center justify-center">
+            <span className="text-xs text-black font-bold">🐉</span>
+          </div>
           <span>Start</span>
         </button>
       </div>
@@ -50,10 +57,10 @@ const Taskbar = ({ openWindows, activeWindow, onWindowClick }: TaskbarProps) => 
           <button
             key={windowId}
             onClick={() => onWindowClick(windowId)}
-            className={`vista-button px-3 py-1 h-8 text-sm truncate max-w-48 ${
+            className={`kali-button px-3 py-1 h-8 text-sm truncate max-w-48 ${
               activeWindow === windowId 
-                ? 'bg-primary-hover shadow-inner' 
-                : 'bg-primary'
+                ? 'bg-green-600 shadow-inner' 
+                : 'bg-gray-700'
             }`}
           >
             {windowId.charAt(0).toUpperCase() + windowId.slice(1)}
@@ -61,18 +68,11 @@ const Taskbar = ({ openWindows, activeWindow, onWindowClick }: TaskbarProps) => 
         ))}
       </div>
 
-      {/* System Tray */}
+      {/* System Tray - Only Clock */}
       <div className="flex items-center space-x-3">
-        {/* System Icons */}
-        <div className="flex items-center space-x-2 text-xs">
-          <Wifi className="w-4 h-4" />
-          <Volume2 className="w-4 h-4" />
-        </div>
-        
-        {/* Clock */}
-        <div className="glass-effect px-3 py-1 rounded text-xs text-center min-w-20">
-          <div className="font-medium">{formatTime(currentTime)}</div>
-          <div className="text-[10px] opacity-80">{formatDate(currentTime)}</div>
+        <div className="kali-glass px-3 py-1 rounded text-xs text-center min-w-20">
+          <div className="font-medium text-green-300">{formatTime(currentTime)}</div>
+          <div className="text-[10px] text-green-400">{formatDate(currentTime)}</div>
         </div>
       </div>
     </div>

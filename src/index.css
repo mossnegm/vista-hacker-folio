@@ -1,136 +1,131 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Windows Vista-inspired design system - Mostafa Negm Portfolio */
+/* Kali Linux-inspired design system - Mostafa Negm Portfolio */
 
 @layer base {
   :root {
-    /* Vista Desktop Background */
-    --background: 200 25% 15%;
-    --foreground: 210 20% 95%;
+    /* Kali Linux Dark Theme */
+    --background: 210 20% 8%;
+    --foreground: 120 100% 75%;
 
-    /* Vista Glass/Aero Effects */
-    --glass-primary: 210 50% 35%;
-    --glass-secondary: 200 40% 45%;
-    --glass-accent: 215 60% 55%;
+    /* Kali Green/Matrix Effects */
+    --glass-primary: 120 60% 25%;
+    --glass-secondary: 120 40% 35%;
+    --glass-accent: 120 80% 45%;
     
-    /* Vista Window Chrome */
-    --window-bg: 210 15% 85%;
-    --window-border: 210 20% 60%;
-    --window-title: 210 30% 25%;
+    /* Terminal Window Chrome */
+    --window-bg: 210 15% 12%;
+    --window-border: 120 50% 35%;
+    --window-title: 120 100% 75%;
     
     /* Desktop Elements */
-    --desktop-bg: 200 25% 15%;
-    --desktop-gradient: linear-gradient(135deg, hsl(200 25% 15%), hsl(210 30% 25%));
+    --desktop-bg: 210 20% 8%;
+    --desktop-gradient: linear-gradient(135deg, hsl(210 20% 8%), hsl(120 20% 12%));
     
     /* Taskbar */
-    --taskbar-bg: 210 25% 20%;
-    --taskbar-border: 210 30% 35%;
-    --taskbar-glass: hsla(210, 50%, 35%, 0.8);
+    --taskbar-bg: 210 25% 10%;
+    --taskbar-border: 120 50% 25%;
+    --taskbar-glass: hsla(120, 60%, 25%, 0.8);
     
     /* Cards and Containers */
-    --card: 210 15% 85%;
-    --card-foreground: 210 30% 15%;
-    --card-border: 210 20% 70%;
+    --card: 210 15% 15%;
+    --card-foreground: 120 100% 75%;
+    --card-border: 120 50% 35%;
     
     /* Interactive Elements */
-    --primary: 210 50% 35%;
-    --primary-foreground: 210 20% 95%;
-    --primary-hover: 210 55% 40%;
+    --primary: 120 60% 35%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 120 70% 40%;
     
-    --secondary: 200 20% 75%;
-    --secondary-foreground: 210 30% 15%;
+    --secondary: 120 20% 25%;
+    --secondary-foreground: 120 100% 75%;
     
-    --accent: 215 60% 55%;
-    --accent-foreground: 210 20% 95%;
+    --accent: 120 80% 45%;
+    --accent-foreground: 0 0% 100%;
     
     /* Muted Elements */
-    --muted: 210 10% 70%;
-    --muted-foreground: 210 20% 40%;
+    --muted: 120 10% 30%;
+    --muted-foreground: 120 50% 60%;
     
     /* System Colors */
     --destructive: 0 60% 50%;
-    --destructive-foreground: 210 20% 95%;
+    --destructive-foreground: 0 0% 100%;
     
-    --border: 210 20% 70%;
-    --input: 210 15% 85%;
-    --ring: 210 50% 45%;
+    --border: 120 50% 25%;
+    --input: 210 15% 15%;
+    --ring: 120 60% 45%;
 
     /* Effects */
     --glass-blur: blur(10px);
     --glass-opacity: 0.8;
-    --shadow-vista: 0 8px 32px hsla(210, 30%, 10%, 0.4);
-    --shadow-window: 0 4px 16px hsla(210, 30%, 10%, 0.3);
+    --shadow-kali: 0 8px 32px hsla(120, 60%, 10%, 0.6);
+    --shadow-window: 0 4px 16px hsla(120, 60%, 10%, 0.4);
     
     /* Animations */
-    --transition-vista: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-kali: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
     --radius: 4px;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 210 15% 12%;
+    --sidebar-foreground: 120 100% 75%;
+    --sidebar-primary: 120 60% 35%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 120 20% 25%;
+    --sidebar-accent-foreground: 120 100% 75%;
+    --sidebar-border: 120 50% 25%;
+    --sidebar-ring: 120 60% 45%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 210 20% 8%;
+    --foreground: 120 100% 75%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 210 15% 15%;
+    --card-foreground: 120 100% 75%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 210 15% 15%;
+    --popover-foreground: 120 100% 75%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 120 60% 35%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 120 20% 25%;
+    --secondary-foreground: 120 100% 75%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 120 10% 30%;
+    --muted-foreground: 120 50% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 120 80% 45%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --border: 120 50% 25%;
+    --input: 210 15% 15%;
+    --ring: 120 60% 45%;
+
+    --sidebar-background: 210 15% 12%;
+    --sidebar-foreground: 120 100% 75%;
+    --sidebar-primary: 120 60% 35%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 120 20% 25%;
+    --sidebar-accent-foreground: 120 100% 75%;
+    --sidebar-border: 120 50% 25%;
+    --sidebar-ring: 120 60% 45%;
   }
 }
 
-/* Vista-specific utility classes */
+/* Kali Linux-specific utility classes */
 @layer components {
   .glass-effect {
     background: hsla(var(--glass-primary), var(--glass-opacity));
     backdrop-filter: var(--glass-blur);
     border: 1px solid hsla(var(--glass-accent), 0.3);
-    box-shadow: var(--shadow-vista);
+    box-shadow: var(--shadow-kali);
   }
   
   .window-chrome {
@@ -142,7 +137,7 @@
   
   .desktop-icon {
     @apply flex flex-col items-center p-3 rounded cursor-pointer;
-    @apply hover:bg-blue-500/20 transition-all duration-200;
+    @apply hover:bg-green-500/20 transition-all duration-200;
     color: hsl(var(--foreground));
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
   }
@@ -153,10 +148,10 @@
       hsl(var(--taskbar-border))
     );
     border-top: 1px solid hsl(var(--taskbar-border));
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
   }
   
-  .vista-button {
+  .kali-button {
     background: linear-gradient(to bottom, 
       hsl(var(--primary)), 
       hsl(var(--primary-hover))
@@ -164,15 +159,22 @@
     border: 1px solid hsl(var(--primary-hover));
     color: hsl(var(--primary-foreground));
     border-radius: var(--radius);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transition: var(--transition-vista);
+    box-shadow: inset 0 1px 0 rgba(0, 255, 0, 0.2);
+    transition: var(--transition-kali);
   }
   
-  .vista-button:hover {
+  .kali-button:hover {
     background: linear-gradient(to bottom, 
       hsl(var(--primary-hover)), 
       hsl(var(--primary))
     );
+    box-shadow: inset 0 1px 0 rgba(0, 255, 0, 0.3);
+  }
+
+  .kali-glass {
+    background: hsla(var(--taskbar-glass), 0.9);
+    border: 1px solid hsla(var(--accent), 0.3);
+    backdrop-filter: blur(8px);
   }
 }
 
@@ -184,14 +186,28 @@
   body {
     @apply bg-background text-foreground overflow-hidden;
     background: var(--desktop-gradient);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Courier New', monospace;
   }
   
   .desktop-wallpaper {
-    background: var(--desktop-gradient), url('/src/assets/vista-wallpaper.jpg');
+    background: var(--desktop-gradient);
     background-size: cover;
     background-position: center;
-    background-blend-mode: multiply;
     min-height: 100vh;
+    position: relative;
+  }
+  
+  .desktop-wallpaper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 20%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(0, 255, 0, 0.05) 0%, transparent 50%),
+      linear-gradient(135deg, transparent 0%, rgba(0, 255, 0, 0.02) 50%, transparent 100%);
+    pointer-events: none;
   }
 }
